@@ -32,16 +32,6 @@
         </table>
     </div>
 
-    <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
-        <hr>
-        <div style="align-self: center">
-            <h3>Виконати "Клік" по монітору:</h3>
-        </div>
-        <label for="monitor_id">ID монітору:</label>
-        <input id="monitor_id" style="align-self: center; width: 100%" type="number"/>
-        <span id="result_status"></span>
-        <input type="button" value="Клікнути" id="updateClicks" style="margin: auto"/>
-    </div>
 
     <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
         <hr>
@@ -55,6 +45,18 @@
         <span id="count_of_clicks"></span>
         <input type="button" value="Отримати" id="getClicks" style="margin: auto"/>
     </div>
+
+    <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
+        <hr>
+        <div style="align-self: center">
+            <h3>Виконати "Клік" по монітору:</h3>
+        </div>
+        <label for="monitor_id">ID монітору:</label>
+        <input id="monitor_id" style="align-self: center; width: 100%" type="number"/>
+        <span id="result_status"></span>
+        <input type="button" value="Клікнути" id="updateClicks" style="margin: auto"/>
+    </div>
+
 </div>
 <script>
     const monitors_list = document.getElementById('monitors_list');
