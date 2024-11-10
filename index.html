@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Перевірка розробленого API</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        hr {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; justify-content: center; flex-direction: column; width: 100%">
+    <div style="align-self: center">
+        <h2>Перевірка розробленого API</h2>
+    </div>
+    <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
+        <hr>
+        <div style="align-self: center">
+            <h3>Отримати список моніторів:</h3>
+        </div>
+        <label for="monitors_list">Список моніторів:</label>
+        <textarea id="monitors_list" style="width: 100%; align-self: center"></textarea>
+        <input type="button" value="Отримати список" id="getMonitorsList" style="margin: auto"/>
+        <table>
+            <thead>Список у вигляді таблиці:</thead>
+            <tbody id="table_monitors_list"></tbody>
+        </table>
+    </div>
+
+    <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
+        <hr>
+        <div style="align-self: center">
+            <h3>Виконати "Клік" по монітору:</h3>
+        </div>
+        <label for="monitor_id">ID монітору:</label>
+        <input id="monitor_id" style="align-self: center; width: 100%" type="number"/>
+        <span id="result_status"></span>
+        <input type="button" value="Клікнути" id="updateClicks" style="margin: auto"/>
+    </div>
+
+    <div style="align-self: center; display: flex; justify-content: center; flex-direction: column; width: 75%">
+        <hr>
+        <div style="align-self: center">
+            <h3>Отримати інформацію по кліках:</h3>
+        </div>
+        <label for="monitor_id_for_info">ID монітору:</label>
+        <input id="monitor_id_for_info" style="align-self: center; width: 100%" type="number"/>
+        <label for="monitors_clicks">Інформація про натискання:</label>
+        <textarea id="monitors_clicks" style="width: 100%; align-self: center"></textarea>
+        <span id="count_of_clicks"></span>
+        <input type="button" value="Отримати" id="getClicks" style="margin: auto"/>
+    </div>
+</div>
+<script>
+    const monitors_list = document.getElementById('monitors_list');
+    const table_monitors_list = document.getElementById('table_monitors_list');
+    const monitor_id = document.getElementById('monitor_id');
+    const monitors_clicks = document.getElementById("monitors_clicks");
+    const monitor_id_for_info = document.getElementById("monitor_id_for_info");
+    document.getElementById('getMonitorsList').addEventListener('click', () => {
+        fetch('http://localhost:8030/category/monitors', {}).then((res) => {
+            res.json().then((monitors) => {
+                monitors_list.value = JSON.stringify(monitors);
+                table_monitors_list.innerHTML = ""
+                monitors.monitors.forEach((monitor) => {
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.innerText = monitor;
+                    tr.appendChild(td);
+                    table_monitors_list.appendChild(tr);
+                });
+            })
+        });
+    })
+    document.getElementById('getClicks').addEventListener('click', () => {
+        getMonitorClicks(monitor_id_for_info.value).then((res) => {
+            res.json().then((monitor) => {
+                monitors_clicks.value = JSON.stringify(monitor);
+                document.getElementById("count_of_clicks").innerText = "Кількість настикань на монітор з ID " + monitor_id.value + ": " + monitor.count;
+
+            })
+        });
+    });
+    document.getElementById('updateClicks').addEventListener('click', () => {
+        fetch('http://localhost:8030/category/monitor_click/' + monitor_id.value, {}).then((res) => {
+            document.getElementById("result_status").innerText = res.statusText
+            monitor_id_for_info.value = monitor_id.value
+            getMonitorClicks(monitor_id_for_info.value).then((res) => {
+                res.json().then((monitor) => {
+                    monitors_clicks.value = JSON.stringify(monitor);
+                    document.getElementById("count_of_clicks").innerText = "Кількість настикань на монітор з ID " + monitor_id.value + ": " + monitor.count;
+
+                })
+            });
+        });
+    })
+
+    async function getMonitorClicks(monitor_id) {
+        return await fetch('http://localhost:8030/category/monitor/' + monitor_id, {});
+    }
+</script>
+</body>
+</html>
