@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=True
-ExecStartPre=/opt/monitor_api/monitor_api --start
+ExecStartPre=/bin/bash -c '/opt/monitor_api/monitor_api --start &'
 ExecStart=/opt/monitor_api/goapi.sh start
 [Install]
 WantedBy=multi-user.target
