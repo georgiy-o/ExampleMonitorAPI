@@ -65,7 +65,7 @@
     const monitors_clicks = document.getElementById("monitors_clicks");
     const monitor_id_for_info = document.getElementById("monitor_id_for_info");
     document.getElementById('getMonitorsList').addEventListener('click', () => {
-        fetch('http://localhost:8030/category/monitors', {}).then((res) => {
+        fetch('http://192.168.2.102:8030/category/monitors', {}).then((res) => {
             res.json().then((monitors) => {
                 monitors_list.value = JSON.stringify(monitors);
                 table_monitors_list.innerHTML = ""
@@ -89,7 +89,7 @@
         });
     });
     document.getElementById('updateClicks').addEventListener('click', () => {
-        fetch('http://localhost:8030/category/monitor_click/' + monitor_id.value, {}).then((res) => {
+        fetch('http://192.168.2.102:8030/category/monitor_click/' + monitor_id.value, {}).then((res) => {
             document.getElementById("result_status").innerText = res.statusText
             monitor_id_for_info.value = monitor_id.value
             getMonitorClicks(monitor_id_for_info.value).then((res) => {
@@ -103,7 +103,7 @@
     })
 
     async function getMonitorClicks(monitor_id) {
-        return await fetch('http://localhost:8030/category/monitor/' + monitor_id, {});
+        return await fetch('http://192.168.2.102:8030/category/monitor/' + monitor_id, {});
     }
 </script>
 </body>
