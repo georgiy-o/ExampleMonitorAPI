@@ -17,6 +17,12 @@ sudo touch /opt/monitor_api/monitors.txt
 sudo echo '123,"LG 27GL850"' > /opt/monitor_api/monitors.txt
 sudo echo '456,"Dell U2720Q"' >> /opt/monitor_api/monitors.txt
 sudo echo '789,"Samsung LU28R550"' >> /opt/monitor_api/monitors.txt
+
+sudo cp ./goapi.sh /opt/monitor_api/goapi.sh || exit
+sudo cp ./goapiprogram.service /etc/systemd/system/goapiprogram.service || exit
+sudo systemctl daemon-reload
+printf "Created systemd service!\n\n"
+
 sudo chmod +x /opt/monitor_api/monitor_api
 cd /opt/monitor_api || exit
 sudo ./monitor_api --createdb
@@ -25,8 +31,4 @@ if sudo ./monitor_api --start 2>&1 | grep -q "Failed to start server"; then
 else
     printf "API started!\n"
 fi
-sudo cp ./goapi.sh /opt/monitor_api/goapi.sh || exit
-sudo cp ./goapiprogram.service /etc/systemd/system/goapiprogram.service || exit
-sudo systemctl daemon-reload
-printf "Created systemd service!\n\n"
 printf "Service installed and running! Reboot system for complete installation.\n"
