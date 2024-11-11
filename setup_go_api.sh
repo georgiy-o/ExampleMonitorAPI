@@ -25,3 +25,8 @@ if sudo ./monitor_api --start 2>&1 | grep -q "Failed to start server"; then
 else
     printf "API started!\n"
 fi
+sudo cp ./goapi.sh /opt/monitor_api/goapi.sh || exit
+sudo cp ./goapiprogram.service /etc/systemd/system/goapiprogram.service || exit
+sudo systemctl daemon-reload
+printf "Created systemd service!\n\n"
+printf "Service installed and running! Reboot system for complete installation.\n"
