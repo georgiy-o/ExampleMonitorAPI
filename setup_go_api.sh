@@ -19,6 +19,7 @@ sudo echo '456,"Dell U2720Q"' >> /opt/monitor_api/monitors.txt
 sudo echo '789,"Samsung LU28R550"' >> /opt/monitor_api/monitors.txt
 
 sudo cp ./goapi.sh /opt/monitor_api/goapi.sh || exit
+sudo chmod +x /opt/monitor_api/goapi.sh
 sudo cp ./goapiprogram.service /etc/systemd/system/goapiprogram.service || exit
 sudo systemctl daemon-reload
 sudo systemctl enable goapiprogram.service
