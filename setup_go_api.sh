@@ -12,7 +12,6 @@ sudo mkdir -p /opt/monitor_api
 sudo mkdir -p /opt/monitor_api/pub
 sudo cp ./index.html /opt/monitor_api/pub/index.html
 go mod tidy
-go mod vendor
 go build -o /opt/monitor_api/monitor_api ./
 sudo touch /opt/monitor_api/monitors.txt
 sudo echo '123,"LG 27GL850"' > /opt/monitor_api/monitors.txt
