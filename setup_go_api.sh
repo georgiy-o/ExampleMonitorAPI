@@ -26,9 +26,11 @@ printf "Created systemd service!\n\n"
 sudo chmod +x /opt/monitor_api/monitor_api
 cd /opt/monitor_api || exit
 sudo ./monitor_api --createdb
-if sudo ./monitor_api --start 2>&1 | grep -q "Failed to start server"; then
-    printf "Cannot start API! Check if port 8030 is open!\n"
+if pgrep -x "monitor_api" > /dev/null; then
+    printf "monitor_api is already running!\n"
 else
+    sudo ./monitor_api --start 2>&1 &
     printf "API started!\n"
 fi
+
 printf "Service installed and running! Reboot system for complete installation.\n"
